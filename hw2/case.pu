@@ -1,0 +1,24 @@
+@startuml a
+
+left to right direction
+
+actor "小花" as User
+actor "ATM" as Bank
+rectangle System {
+    usecase "確認身分" as UC1
+    usecase "確認存款金額" as UC2
+    usecase "提款" as UC3
+}
+
+User --> UC1
+User --> UC3
+
+UC3 .> UC2 : <<include>>
+
+
+UC1 <-- Bank
+UC2 <-- Bank
+
+
+
+@enduml
