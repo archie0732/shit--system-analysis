@@ -1,0 +1,26 @@
+@startuml a
+
+left to right direction
+
+actor "小名" as User
+actor "自動借書機" as Bank
+actor "掃描器" as Scanner
+
+rectangle System {
+    usecase "登入" as UC1
+    usecase "自動借書" as UC2
+    usecase "確認借閱權限" as UC3
+    usecase "顯示借閱資料" as UC4
+}
+
+User --> UC1
+User --> UC2
+UC2 .> UC3 : <<include>>
+UC2 .> UC1 : <<include>>
+Scanner --> UC1
+
+UC3 <-- Bank
+UC4 <-- Bank
+
+
+@enduml
