@@ -1,0 +1,47 @@
+@startuml
+start
+
+repeat
+ : 將卡片放到掃描器前;
+ : 自動借書機確認身分;
+
+-> 確認身份;
+
+repeat while () is (登入失敗) not (登入成功)
+
+: 允許自動借書;
+
+repeat
+    : 將書本放到掃描器前;
+    : 確認書本資訊;
+repeat while () is (掃描失敗) not (掃描成功)
+
+: 確認使用者借閱權限;
+
+fork
+    if(是否有書籍逾期未歸還) then(是)
+        #Pink:顯示不能借閱;
+        kill
+    else (否)
+        endif
+fork again
+    if(是否達到借閱上限) then (是)
+        #Pink:顯示不能借閱;
+        kill
+    else (否)
+        endif
+endfork
+
+-> 顯示借閱資料;
+
+fork
+    :將書籍狀態改為已借閱;
+fork again
+    :紀錄借書時間與還書期限;
+fork again
+    :顯示借書時間與還書期限;
+endfork
+
+->借閱成功;
+stop
+@enduml
