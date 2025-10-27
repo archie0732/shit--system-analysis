@@ -30,7 +30,7 @@ fork again
         kill
     else (否)
         endif
-endfork
+endmerge
 
 -> 顯示借閱資料;
 
@@ -40,7 +40,7 @@ fork again
     :紀錄借書時間與還書期限;
 fork again
     :顯示借書時間與還書期限;
-endfork
+endmerge
 
 ->借閱成功;
 stop
