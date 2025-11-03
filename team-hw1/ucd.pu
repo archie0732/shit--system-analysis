@@ -1,0 +1,45 @@
+@startuml healthy_diet_usecasediagram
+left to right direction
+!theme mono
+:使用者: as User
+:人工智慧: as AI
+
+rectangle 健康飲食規劃系統 {
+    rectangle Discord {
+        usecase "設定定時提醒" as UC1
+        usecase "查看指令與使用說明" as UC2
+        usecase "諮詢飲食建議" as UC3
+        usecase "查看報告與建議" as UC4
+        usecase "查看個人資料" as UC5
+        User - UC1
+        User - UC2
+        User - UC3
+        User - UC4
+        User - UC5
+        UC1 ...> (呼叫「 健康飲食 Bot 」) : <<include>>
+        UC2 ...> (呼叫「 健康飲食 Bot 」) : <<include>>
+        UC3 ...> (呼叫「 健康飲食 Bot 」) : <<include>>
+        UC3 <. (輸入圖片) : <<extend>>
+        UC3 <.. (輸入文字) : <<extend>>
+        UC4 <.. (查看精簡報告) : <<extend>>
+    }
+    rectangle 健康飲食Bot {
+        (呼叫「 健康飲食 Bot 」) ..> (驗證訊息) : <<include>>
+        (驗證訊息) -- AI
+        (回傳結果) <. (驗證訊息) : <<include>>
+    }
+    rectangle 資料庫{
+        (寫入資料庫) ..> (回傳結果) : <<extend>>
+    }
+    rectangle 網頁{
+        usecase "填寫個人基本資料" as UC9
+        UC5 <. (顯示個人資料) : <<extend>>
+        User -- UC9
+        UC9 ..> (登入) : <<include>>
+        (重置密碼) .> (登入) : <<extend>>
+        (登入) <.. (儲存資料) : <<extend>>
+        (儲存資料) ..> (寫入資料庫) : <<include>>
+        (查看詳細報告) .> UC4 : <<extend>>
+    }
+}
+@enduml

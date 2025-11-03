@@ -1,0 +1,67 @@
+@startuml
+title 健康飲食規劃系統（Healthy Diet Planning System）
+left to right direction
+
+
+
+
+actor 使用者 as User
+actor Discord
+
+
+actor "健康飲食 Bot" as Bot
+actor "生成式 AI" as AI
+actor "網站" as Web
+actor "後端伺服器" as Server
+
+
+rectangle "健康飲食規劃系統\n(Healthy Diet Planning System)" as System {
+    usecase "設定定時提醒\n(Set Reminder)" as UC1
+  
+
+  usecase "查看指令及使用說明\n(View Help)" as UC2
+  
+  
+  usecase "諮詢飲食建議\n(Consult AI for Advice)" as UC3
+  usecase "查看報告及建議\n(View Reports & Suggestions)" as UC4
+  
+
+  usecase "查看個人資料\n(View Profile)" as UC5
+  usecase "填寫個人基本資料\n(Fill Personal Info)" as UC6
+  usecase "網站連結" as UC7
+ 
+}
+  
+
+User -> Discord
+
+Discord -[#red]-> UC1
+Discord -[#blue]-> UC2
+Discord -[#green]-> UC3
+Discord -[#Orange]-> UC4
+Discord -[#Purple]-> UC5
+Discord --> UC6
+
+
+UC1 -[#red]> Bot
+UC2 -[#blue]-> Bot
+UC3 -[#green]-> Bot
+UC3 --[#green]--> AI : 傳遞訊息與圖片
+UC4 -[#Orange]-> Bot
+UC4 --[#Orange]---> Server : 抓取健康建議
+UC5 -[#Purple]->Bot
+UC6 ----> Bot
+UC6 -----> Server : 儲存個人資料
+UC7 --->Web : 登入並填寫基本資料
+UC7 --[#Purple]--->Web :前往網頁
+UC7--[#Orange]--->Web :登入並查看詳細報告
+UC7<----Bot 
+UC7<--[#Orange]--Bot 
+UC7<--[#Purple]--Bot 
+
+
+UC5--[#Purple]-->UC7 : <<extend>>
+UC4--[#Orange]-->UC7 : <<include>>
+UC6---->UC7 : <<include>>
+
+
